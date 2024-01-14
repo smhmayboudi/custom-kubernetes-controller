@@ -28,8 +28,8 @@ BUNDLE_METADATA_OPTS ?= $(BUNDLE_CHANNELS) $(BUNDLE_DEFAULT_CHANNEL)
 # This variable is used to construct full image tags for bundle and catalog images.
 #
 # For example, running 'make bundle-build bundle-push catalog-build catalog-push' will build and push both
-# smhmayboudi.github.io/custom-kubernetes-controller-bundle:$VERSION and smhmayboudi.github.io/custom-kubernetes-controller-catalog:$VERSION.
-IMAGE_TAG_BASE ?= smhmayboudi.github.io/custom-kubernetes-controller
+# interview.com/custom-kubernetes-controller-bundle:$VERSION and interview.com/custom-kubernetes-controller-catalog:$VERSION.
+IMAGE_TAG_BASE ?= interview.com/custom-kubernetes-controller
 
 # BUNDLE_IMG defines the image:tag used for the bundle.
 # You can use it as an arg. (E.g make bundle-build BUNDLE_IMG=<some-registry>/<project-name-bundle>:<tag>)
@@ -285,25 +285,3 @@ catalog-build: opm ## Build a catalog image.
 .PHONY: catalog-push
 catalog-push: ## Push a catalog image.
 	$(MAKE) docker-push IMG=$(CATALOG_IMG)
-
-
-
-# LANGUAGE SPECIFICS
-
-GO := go
-GO_ARCH := $(shell $(GO) env GOARCH)
-GO_OS := $(shell $(GO) env GOOS)
-GO_PATH := $(shell $(GO) env GOPATH)
-GO_TAGS := arium,unit
-# GO_PKG := $(shell $(GO) list -m -tags=${GO_TAGS})
-# GO_PKG_LIST := $(shell $(GO) list -tags=${GO_TAGS} $(GO_PKG)/... | grep --invert-match "vendor")
-GO_PKG_LIST := ./...
-
-# Add golangci lint
-.PHONY: add-golangci-lint
-add-golangci-lint: ## Add GolangCI Lint
-	$(GO) install github.com/golangci/golangci-lint/cmd/golangci-lint@$$($(GO) list -m -f '{{ .Version }}' github.com/golangci/golangci-lint)
-
-.PHONY: golangci-lint
-golangci-lint: ## GolangCI Lint
-	golangci-lint run --config=./.golangci.yaml $(GO_PKG_LIST)
