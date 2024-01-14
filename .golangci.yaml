@@ -1,0 +1,693 @@
+issues:
+  exclude-rules: []
+  exclude-use-default: false
+  fix: true
+  max-issues-per-linter: 0
+  max-same-issues: 0
+linters-settings:
+  decorder:
+    disable-dec-num-check: false
+    disable-dec-order-check: false
+    disable-init-func-first-check: false
+  depguard:
+    rules:
+      main:
+        allow:
+          - flag
+          - k8s.io/apimachinery/pkg/runtime
+          - k8s.io/apimachinery/pkg/util/runtime
+          - k8s.io/client-go/kubernetes/scheme
+          - k8s.io/client-go/plugin/pkg/client/auth
+          - os
+          - sigs.k8s.io/controller-runtime
+          - sigs.k8s.io/controller-runtime/pkg/healthz
+          - sigs.k8s.io/controller-runtime/pkg/log/zap
+  errcheck:
+    check-blank: true
+    check-type-assertions: true
+    disable-default-exclusions: true
+    exclude-functions:
+      - encoding/json.Marshal
+      - encoding/json.MarshalIndent
+  errchkjson:
+    check-error-free-encoding: true
+    report-no-exported: true
+  exhaustive:
+    check:
+      - switch
+      - map
+    default-signifies-exhaustive: true
+    package-scope-only: true
+  forbidigo:
+    exclude-godoc-examples: false
+  gci:
+    custom-order: true
+    sections:
+      - standard
+      - default
+      - prefix(gitlab.playpod.ir/alpha/backend/server-services-next)
+      - blank
+      - dot
+  goconst:
+    ignore-calls: false
+    numbers: true
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - style
+      - performance
+      - experimental
+      - opinionated
+    settings:
+      captLocal:
+        paramsOnly: false
+      elseif:
+        skipBalanced: false
+      rangeExprCopy:
+        skipTestFuncs: false
+      ruleguard:
+        failOnError: true
+      truncateCmp:
+        skipArchDependent: false
+      underef:
+        skipRecvDeref: false
+      unnamedResult:
+        checkExported: true
+  godot:
+    capital: true
+    scope: all
+  gofmt:
+    rewrite-rules:
+      - pattern: "a[b:len(a)]"
+        replacement: "a[b:]"
+      - pattern: "interface{}"
+        replacement: any
+  gofumpt:
+    extra-rules: true
+    module-path: gitlab.playpod.ir/alpha/backend/server-services-next
+  goimports:
+    local-prefixes: gitlab.playpod.ir/alpha/backend/server-services-next
+  gomnd:
+    ignored-numbers: []
+  gomodguard:
+    allowed:
+      domains:
+        - k8s.io
+        - sigs.k8s.io
+    blocked:
+      local_replace_directives: true
+  gosimple:
+    checks:
+      - all
+  gosec:
+    severity: high
+    confidence: high
+    config:
+      G101:
+        ignore_entropy: true
+      G111:
+        pattern: ""
+  gosmopolitan:
+    ignore-tests: false
+    watch-for-scripts: []
+  govet:
+    check-shadowing: true
+    enable-all: true
+    settings:
+      shadow:
+        strict: true
+  grouper:
+    const-require-single-const: true
+    import-require-single-import: true
+    type-require-single-type: true
+    var-require-single-var: true
+  importas:
+    no-extra-aliases: true
+    alias:
+      - alias: utilruntime
+        pkg: k8s.io/apimachinery/pkg/util/runtime
+      - alias: clientgoscheme
+        pkg: k8s.io/client-go/kubernetes/scheme
+      - alias: ctrl
+        pkg: sigs.k8s.io/controller-runtime
+  loggercheck:
+    kitlog: false
+    klog: false
+    logr: false
+    zap: false
+    require-string-key: true
+    no-printf-like: true
+  maligned:
+    suggest-new: true
+  misspell:
+    locale: US
+    ignore-words:
+      - payed
+  nolintlint:
+    require-explanation: true
+    require-specific: true
+  nonamedreturns:
+    report-error-in-defer: true
+  perfsprint:
+    err-error: true
+  prealloc:
+    for-loops: true
+  predeclared:
+    q: true
+  promlinter:
+    strict: true
+  revive:
+    confidence: 1
+    enable-all-rules: true
+    ignore-generated-header: true
+    rules:
+      - name: add-constant
+        severity: error
+        disabled: true
+        arguments:
+          - maxLitCount: "3"
+            allowStrs: "1"
+            allowInts: "0,1"
+            allowFloats: ""
+      - name: argument-limit
+        severity: error
+        disabled: true
+        arguments:
+          - 4
+      - name: atomic
+        severity: error
+        disabled: false
+      - name: banned-characters
+        severity: error
+        disabled: false
+        arguments:
+          - Ω
+          - Σ
+          - σ
+      - name: bare-return
+        severity: error
+        disabled: false
+      - name: blank-imports
+        severity: error
+        disabled: false
+      - name: bool-literal-in-expr
+        severity: error
+        disabled: false
+      - name: call-to-gc
+        severity: error
+        disabled: false
+      - name: cognitive-complexity
+        severity: error
+        disabled: true
+        arguments:
+          - 7
+      - name: comment-spacings
+        severity: error
+        disabled: true
+        arguments: []
+      - name: confusing-naming
+        severity: error
+        disabled: false
+      - name: confusing-results
+        severity: error
+        disabled: false
+      - name: constant-logical-expr
+        severity: error
+        disabled: false
+      - name: context-as-argument
+        severity: error
+        disabled: true
+        arguments:
+          - allowTypesBefore: "*testing.T,*github.com/user/repo/testing.Harness"
+      - name: context-keys-type
+        severity: error
+        disabled: false
+      - name: cyclomatic
+        severity: error
+        disabled: true
+        arguments:
+          - 3
+      - name: datarace
+        severity: error
+        disabled: false
+      - name: deep-exit
+        severity: error
+        disabled: false
+      - name: defer
+        severity: error
+        disabled: false
+        arguments:
+          - - call-chain
+            - loop
+      - name: dot-imports
+        severity: error
+        disabled: false
+      - name: duplicated-imports
+        severity: error
+        disabled: false
+      - name: early-return
+        severity: error
+        disabled: false
+        arguments:
+          - preserveScope
+      - name: empty-block
+        severity: error
+        disabled: false
+      - name: empty-lines
+        severity: error
+        disabled: false
+      - name: enforce-map-style
+        severity: warning
+        disabled: false
+        arguments:
+          - make
+      - name: error-naming
+        severity: error
+        disabled: false
+      - name: error-return
+        severity: error
+        disabled: false
+      - name: error-strings
+        severity: error
+        disabled: false
+      - name: errorf
+        severity: error
+        disabled: false
+      - name: exported
+        severity: error
+        disabled: false
+        arguments:
+          - checkPrivateReceivers
+          # - preserveScope
+          - sayRepetitiveInsteadOfStutters
+      - name: file-header
+        severity: error
+        disabled: true
+        arguments:
+          - ""
+      - name: flag-parameter
+        severity: error
+        disabled: false
+      - name: function-result-limit
+        severity: error
+        disabled: false
+        arguments:
+          - 3
+      - name: function-length
+        severity: error
+        disabled: true
+        arguments:
+          - 10
+          - 0
+      - name: get-return
+        severity: error
+        disabled: false
+      - name: identical-branches
+        severity: error
+        disabled: false
+      - name: if-return
+        severity: error
+        disabled: false
+      - name: increment-decrement
+        severity: error
+        disabled: false
+      - name: indent-error-flow
+        severity: error
+        disabled: false
+        arguments:
+          - preserveScope
+      - name: import-alias-naming
+        severity: warning
+        disabled: false
+        arguments:
+          - ^[a-z][a-z0-9_]{0,}$
+      - name: imports-blacklist
+        severity: error
+        disabled: false
+        arguments:
+          - crypto/sha1
+      - name: import-shadowing
+        severity: error
+        disabled: false
+      - name: line-length-limit
+        severity: error
+        disabled: true
+        arguments:
+          - 120
+      - name: max-public-structs
+        severity: error
+        disabled: true
+        arguments:
+          - 3
+      - name: modifies-parameter
+        severity: error
+        disabled: false
+      - name: modifies-value-receiver
+        severity: error
+        disabled: false
+      - name: nested-structs
+        severity: error
+        disabled: false
+      - name: optimize-operands-order
+        severity: error
+        disabled: false
+      - name: package-comments
+        severity: error
+        disabled: false
+      - name: range
+        severity: error
+        disabled: false
+      - name: range-val-in-closure
+        severity: error
+        disabled: false
+      - name: range-val-address
+        severity: error
+        disabled: false
+      - name: receiver-naming
+        severity: error
+        disabled: false
+      - name: redundant-import-alias
+        severity: error
+        disabled: false
+      - name: redefines-builtin-id
+        severity: error
+        disabled: false
+      - name: string-of-int
+        severity: error
+        disabled: false
+      - name: string-format
+        severity: error
+        disabled: false
+        arguments:
+          - - core.WriteError[1].Message
+            - /^([^A-Z]|$)/
+            - must not start with a capital letter
+          - - fmt.Errorf[0]
+            - /(^|[^.!?])$/
+            - must not end in punctuation
+          - - panic
+            - /^[^\n]*$/
+            - must not contain line breaks
+      - name: struct-tag
+        severity: error
+        disabled: false
+      - name: superfluous-else
+        severity: error
+        disabled: false
+        arguments:
+          - preserveScope
+      - name: time-equal
+        severity: error
+        disabled: false
+      - name: time-naming
+        severity: error
+        disabled: false
+      - name: var-naming
+        severity: error
+        disabled: false
+        arguments:
+          - - ID
+          - - VM
+          - - upperCaseConst: true
+      - name: var-declaration
+        severity: error
+        disabled: false
+      - name: unconditional-recursion
+        severity: error
+        disabled: false
+      - name: unexported-naming
+        severity: error
+        disabled: false
+      - name: unexported-return
+        severity: error
+        disabled: false
+      - name: unhandled-error
+        severity: error
+        disabled: false
+        arguments:
+          - fmt.Printf
+      - name: unnecessary-stmt
+        severity: error
+        disabled: false
+      - name: unreachable-code
+        severity: error
+        disabled: false
+      - name: unused-parameter
+        severity: error
+        disabled: false
+        arguments:
+          - allowRegex: ^_
+      - name: unused-receiver
+        severity: error
+        disabled: false
+        arguments:
+          - allowRegex: ^_
+      - name: useless-break
+        severity: error
+        disabled: false
+      - name: waitgroup-by-value
+        severity: error
+        disabled: false
+    severity: error
+  rowserrcheck:
+    packages:
+      - gorm.io/driver/postgres
+      - gorm.io/gorm
+  staticcheck:
+    checks:
+      - all
+  stylecheck:
+    checks:
+      - all
+    dot-import-whitelist: []
+    http-status-code-whitelist: []
+    initialisms: []
+  tagalign:
+    order:
+      - binding
+      - json
+      - mapstructure
+      - toml
+      - validate
+      - yaml
+      - yml
+  tagliatelle:
+    case:
+      rules:
+        avro: snake
+        bson: snake
+        env: upperSnake
+        envconfig: upperSnake
+        json: snake
+        mapstructure: upper
+        xml: snake
+        yaml: snake
+  tenv:
+    all: true
+  testifylint:
+    enable-all: true
+    suite-extra-assert-call:
+      mode: require
+  unparam:
+    check-exported: true
+  unused:
+    post-statements-are-reads: true
+  usestdlibvars:
+    constant-kind: true
+    crypto-hash: true
+    default-rpc-path: true
+    sql-isolation-level: true
+    time-layout: true
+    time-month: true
+    tls-signature-scheme: true
+  varcheck:
+    exported-fields: true
+  varnamelen:
+    check-receiver: true
+    check-return: true
+    check-type-param: true
+    ignore-chan-recv-ok: true
+    ignore-decls:
+      - db int
+      - id *dao.cudID
+      - id dao.CUDIDer
+      - id string
+      - id uuid.UUID
+      - in map[string]any
+      - ip string
+      - l int
+      - md *MD
+      - ok bool
+      - os string
+      - p any
+      - t testing.T
+    ignore-map-index-ok: true
+    ignore-names:
+      - bo
+      - id
+      - tt
+    ignore-type-assert-ok: true
+  wrapcheck:
+    ignorePackageGlobs:
+      - crypto/rsa
+      - database/sql
+      - encoding/base64
+      - encoding/gob
+      - encoding/hex
+      - encoding/json
+      - fmt
+      - github.com/DATA-DOG/go-sqlmock
+      - github.com/bufbuild/protovalidate-go
+      - github.com/casbin/casbin/v2
+      - github.com/go-playground/validator/v10/translations/en
+      - github.com/google/uuid
+      - github.com/lestrrat-go/jwx/v2/jwk
+      - github.com/lestrrat-go/jwx/v2/jwt
+      - github.com/lib/pq
+      - github.com/redis/go-redis/extra/redisotel/v9
+      - github.com/redis/go-redis/v9
+      - gitlab.playpod.ir/alpha/backend/server-services-next/gen/go/api/v3
+      - gitlab.playpod.ir/alpha/backend/server-services-next/gen/go/api_arium/v3
+      - gitlab.playpod.ir/alpha/backend/server-services-next/gen/go/api_casbin/v3
+      - gitlab.playpod.ir/alpha/backend/server-services-next/gen/go/api_playpod/v3
+      - gitlab.playpod.ir/alpha/backend/server-services-next/object
+      - gitlab.playpod.ir/alpha/backend/server-services-next/object/bo
+      - gitlab.playpod.ir/alpha/backend/server-services-next/object/dao
+      - gitlab.playpod.ir/alpha/backend/server-services-next/object/dao/playpod
+      - gitlab.playpod.ir/alpha/backend/server-services-next/pkg/opentelemetry
+      - gitlab.playpod.ir/alpha/backend/server-services-next/repository
+      - gitlab.playpod.ir/alpha/backend/server-services-next/service
+      - gitlab.playpod.ir/alpha/backend/server-services-next/service/arium
+      - gitlab.playpod.ir/alpha/backend/server-services-next/service/casbin
+      - gitlab.playpod.ir/alpha/backend/server-services-next/service/matchfunction
+      - gitlab.playpod.ir/alpha/backend/server-services-next/service/playpod
+      - gitlab.playpod.ir/alpha/backend/server-services-next/test/v2
+      - gitlab.playpod.ir/alpha/backend/server-services-next/test/v2/arium
+      - gitlab.playpod.ir/alpha/backend/server-services-next/test/v2/casbin
+      - gitlab.playpod.ir/alpha/backend/server-services-next/test/v2/matchfunction
+      - gitlab.playpod.ir/alpha/backend/server-services-next/test/v2/playpod
+      - go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc
+      - go.opentelemetry.io/otel/metric
+      - go.opentelemetry.io/otel/sdk/resource
+      - go.uber.org/cff
+      - golang.org/x/oauth2
+      - google.golang.org/api/idtoken
+      - google.golang.org/api/oauth2/v2
+      - google.golang.org/grpc
+      - google.golang.org/grpc/internal/status
+      - google.golang.org/grpc/test/bufconn
+      - gorm.io/gorm
+      - io
+      - net
+      - net/http
+      - net/url
+  wsl:
+    error-variable-names:
+      - err
+    force-case-trailing-whitespace: 1
+    force-err-cuddling: true
+linters:
+  disable:
+    - containedctx
+    - dupl
+    - forcetypeassert # 31
+    - funlen
+    - goconst
+    - ireturn
+    - maintidx
+    - rowserrcheck # GENERICS
+    - wastedassign # GENERICS
+  presets:
+    - bugs
+    - comment
+    - complexity
+    - error
+    - format
+    - import
+    - metalinter
+    - module
+    - performance
+    - sql
+    - style
+    - test
+    - unused
+output:
+  format: line-number
+  print-issued-lines: false
+  sort-results: true
+run:
+  allow-parallel-runners: true
+  modules-download-mode: readonly
+  skip-dirs-use-default: false
+  skip-dirs:
+    - .cache/
+    # - .codeclimate.yml
+    # - .commitlint.yaml
+    - .dapr/
+    - .devcontainer/
+    - .dist/
+    - .docker/
+    # - .dockerignore
+    # - .env.example
+    - .git/
+    # - .gitattributes
+    - .githooks/
+    - .github/
+    # - .gitignore
+    - .gitlab/
+    # - .gitlab-ci.yml
+    # - .gitmodules
+    # - .golangci-reference.yaml
+    # - .golangci.yaml
+    # - .goreleaser.yaml
+    - .grafana/
+    - .page/
+    - .profile/
+    # - .renovaterc.json
+    # - .reviewdog.yaml
+    - .vscode/
+    # - AUTHORS
+    # - CHANGELOG.md
+    # - CODEOWNERS
+    # - CODE_OF_CONDUCT.md
+    # - CONTRIBUTING.md
+    # - Dockerfile
+    # - LICENSE
+    # - MAINTAINERS
+    # - NOTICE
+    # - Makefile
+    # - README.md
+    # - SECURITY.md
+    # - SUPPORT.md
+    # - VERSION
+    - api/
+    - api-proto/
+    # - apidocs.swagger.json
+    # - buf.gen.yaml
+    # - buf.work.yaml
+    # - cmd/
+    # - compose.yaml
+    # - config/
+    - db/
+    - doc/
+    # - doc.go
+    # - file.json
+    # - file.log
+    # - gateway/
+    - gen/
+    # - go.mod
+    # - go.sum
+    - internal/
+    # - object/
+    # - pkg/
+    # - repository/
+    - script/
+    # - server/
+    # - service/
+    - test/k6/
+    # - tools.go
+  skip-files:
+    - .*\_gen\.go$
+  timeout: 30m
+severity:
+  default-severity: error
