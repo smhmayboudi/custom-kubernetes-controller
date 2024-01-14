@@ -16,7 +16,6 @@ make install run
 kubectl apply -f config/samples/
 
 make uninstall
-make undeploy
 ```
 
 ## Docker
@@ -34,7 +33,6 @@ make deploy IMG=http://kind-registry:5000/smhmayboudi/custom-kubernetes-controll
 
 kubectl apply -f config/samples/
 
-make uninstall
 make undeploy
 ```
 

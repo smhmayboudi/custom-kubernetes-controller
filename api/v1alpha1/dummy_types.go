@@ -28,7 +28,7 @@ type DummySpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Message is an example field of Dummy. Edit dummy_types.go to remove/update
+	// Message is an example field of Dummy.
 	// +operator-sdk:csv:customresourcedefinitions:type=spec
 	Message string `json:"message,omitempty"`
 }
@@ -37,6 +37,10 @@ type DummySpec struct {
 type DummyStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+
+	// SpecEcho is an example field of Dummy Status.
+	// +operator-sdk:csv:customresourcedefinitions:type=status
+	SpecEcho string `json:"specEcho,omitempty"`
 }
 
 //+kubebuilder:object:root=true

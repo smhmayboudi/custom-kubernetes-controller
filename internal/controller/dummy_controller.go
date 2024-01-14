@@ -66,7 +66,14 @@ func (r *DummyReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl
 		return ctrl.Result{}, err
 	}
 
-	log.Info(fmt.Sprintf("Name=%s Namespace=%s Message=%s", req.Name, req.Namespace, dummy.Spec.Message))
+	log.Info(fmt.Sprintf("Name=%s Namespace=%s Message=%s Status=%s", req.Name, req.Namespace, dummy.Spec.Message, dummy.Status.SpecEcho))
+
+	dummy.Status.SpecEcho = dummy.Spec.Message
+
+	if err := r.Status().Update(ctx, dummy); err != nil {
+		log.Error(err, "Failed to update Dummy status")
+		return ctrl.Result{}, err
+	}
 
 	return ctrl.Result{}, nil
 }
