@@ -11,6 +11,7 @@
 ## Localy
 
 ```shell
+export NGINX_IMAGE="nginx:1.25.3-alpine3.18-slim"
 make install run
 
 kubectl apply -f config/samples/
@@ -19,6 +20,8 @@ make uninstall
 ```
 
 ## Docker
+
+The script provided at [this link](https://kind.sigs.k8s.io/docs/user/local-registry/).
 
 ```shell
 ./.script/kind-with-registry.sh
@@ -47,4 +50,12 @@ operator-sdk run bundle smhmayboudi/custom-kubernetes-controller-bundle:v0.0.1
 kubectl apply -f config/samples/
 
 operator-sdk cleanup custom-kubernetes-controller
+```
+
+## Check the Pods
+
+```shell
+kubectl get deployments
+kubectl logs deployments/dummy1
+kubectl describe deployments/dummy1
 ```

@@ -142,10 +142,11 @@ make deploy IMG=kind-registry:5000/library/controller:latest
 ```
 
 ```shell
-kubectl -n custom-kubernetes-controller-system get deployment
-kubectl -n custom-kubernetes-controller-system describe deployment/custom-kubernetes-controller-controller-manager
+kubectl -n custom-kubernetes-controller-system get deployments
+kubectl -n custom-kubernetes-controller-system describe deployments custom-kubernetes-controller-controller-manager
 kubectl -n custom-kubernetes-controller-system describe pod custom-kubernetes-controller-controller-manager
-kubectl -n custom-kubernetes-controller-system logs deployment/custom-kubernetes-controller-controller-manager
+kubectl -n custom-kubernetes-controller-system logs deployments custom-kubernetes-controller-controller-manager
+kubectl -n custom-kubernetes-controller-system logs pods/custom-kubernetes-controller-controller-manager-...
 
 kubectl get pods --all-namespaces
 kubectl get deployments --all-namespaces

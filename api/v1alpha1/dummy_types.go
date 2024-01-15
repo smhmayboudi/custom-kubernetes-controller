@@ -28,7 +28,8 @@ type DummySpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Message is an example field of Dummy.
+	// Message is a field of Dummy Spec.
+	// +kubebuilder:default:="I'm just a dummy"
 	// +operator-sdk:csv:customresourcedefinitions:type=spec
 	Message string `json:"message,omitempty"`
 }
@@ -38,13 +39,20 @@ type DummyStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// SpecEcho is an example field of Dummy Status.
+	// SpecEcho is an field of Dummy Status.
+	// +kubebuilder:default:="I'm just a dummy"
 	// +operator-sdk:csv:customresourcedefinitions:type=status
 	SpecEcho string `json:"specEcho,omitempty"`
+
+	// PodStatus is an field of Dummy Status.
+	// +kubebuilder:default:="Pending"
+	// +operator-sdk:csv:customresourcedefinitions:type=status
+	PodStatus string `json:"podStatus,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
+//+kubebuilder:resource:scope=Namespaced
 
 // Dummy is the Schema for the dummies API
 type Dummy struct {
@@ -65,5 +73,13 @@ type DummyList struct {
 }
 
 func init() {
-	SchemeBuilder.Register(&Dummy{}, &DummyList{})
+	SchemeBuilder.Register(&Dummy{
+		Spec: DummySpec{
+			Message: "I'm just a dummy",
+		},
+		Status: DummyStatus{
+			SpecEcho:  "I'm just a dummy",
+			PodStatus: "Pending",
+		},
+	}, &DummyList{})
 }

@@ -92,6 +92,9 @@ func main() {
 	if err = (&controller.DummyReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
+		// Add a Recorder to the reconciler.
+		// This allows the operator author to emit events during reconcilliation.
+		Recorder: mgr.GetEventRecorderFor("dummy-controller"),
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "Dummy")
 		os.Exit(1)

@@ -72,6 +72,9 @@ spec:
         - --leader-elect
         image: controller:latest
         name: manager
+        env:
+        - name: NGINX_IMAGE
+          value: nginx:1.25.3-alpine3.18-slim
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:

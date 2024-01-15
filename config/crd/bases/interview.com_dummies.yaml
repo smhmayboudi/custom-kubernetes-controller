@@ -35,14 +35,20 @@ spec:
             description: DummySpec defines the desired state of Dummy
             properties:
               message:
-                description: Message is an example field of Dummy.
+                default: I'm just a dummy
+                description: Message is a field of Dummy Spec.
                 type: string
             type: object
           status:
             description: DummyStatus defines the observed state of Dummy
             properties:
+              podStatus:
+                default: Pending
+                description: PodStatus is an field of Dummy Status.
+                type: string
               specEcho:
-                description: SpecEcho is an example field of Dummy Status.
+                default: I'm just a dummy
+                description: SpecEcho is an field of Dummy Status.
                 type: string
             type: object
         type: object
