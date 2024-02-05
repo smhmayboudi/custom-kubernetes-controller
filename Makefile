@@ -113,8 +113,11 @@ vet: ## Run go vet against code.
 
 .PHONY: test
 test: manifests generate fmt vet envtest ## Run tests.
-	KUBEBUILDER_ASSETS="$(shell $(ENVTEST) use $(ENVTEST_K8S_VERSION) --bin-dir $(LOCALBIN) -p path)" go test ./... -coverprofile cover.out
+	KUBEBUILDER_ASSETS="$(shell $(ENVTEST) use $(ENVTEST_K8S_VERSION) -p path)"  go test $(shell go list ./... | grep -v /test/) -coverprofile cover.out
 
+.PHONY: test-e2e # You will need to have a Kind cluster up in running to run this target
+test-e2e:
+	go test ./test/e2e/ -v -ginkgo.v
 ##@ Build
 
 .PHONY: build
@@ -232,7 +235,7 @@ endif
 
 .PHONY: bundle
 bundle: manifests kustomize operator-sdk ## Generate bundle manifests and metadata, then validate generated files.
-	$(OPERATOR_SDK) generate kustomize manifests -q
+	$(OPERATOR_SDK) generate kustomize manifests --interactive=false -q
 	cd config/manager && $(KUSTOMIZE) edit set image controller=$(IMG)
 	$(KUSTOMIZE) build config/manifests | $(OPERATOR_SDK) generate bundle $(BUNDLE_GEN_FLAGS)
 	$(OPERATOR_SDK) bundle validate ./bundle
@@ -285,3 +288,20 @@ catalog-build: opm ## Build a catalog image.
 .PHONY: catalog-push
 catalog-push: ## Push a catalog image.
 	$(MAKE) docker-push IMG=$(CATALOG_IMG)
+
+.PHONY: kubebuilder
+KUBEBUILDER = ./bin/kubebuilder
+kubebuilder: ## Download kubebuilder locally if necessary.
+ifeq (,$(wildcard $(KUBEBUILDER)))
+ifeq (,$(shell which kubebuilder 2>/dev/null))
+	@{ \
+	set -e ;\
+	mkdir -p $(dir $(KUBEBUILDER)) ;\
+	OS=$(shell go env GOOS) && ARCH=$(shell go env GOARCH) && \
+	curl -sSLo $(KUBEBUILDER) https://github.com/kubernetes-sigs/kubebuilder/releases/download/v3.13.0/kubebuilder_$${OS}_$${ARCH} ;\
+	chmod +x $(KUBEBUILDER) ;\
+	}
+else
+KUBEBUILDER = $(shell which kubebuilder)
+endif
+endif
